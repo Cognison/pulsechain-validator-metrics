@@ -23,9 +23,7 @@ services:
         network_mode: host
     loki:
         build:
-            context: loki
-        ports:
-            - "127.0.0.1:3100:3100"
+            context: loki       
         volumes:
             - ./loki/loki-config.yaml:/etc/loki/loki-config.yaml
             - loki-data:/data/loki
