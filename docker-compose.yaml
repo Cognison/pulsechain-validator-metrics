@@ -21,8 +21,27 @@ services:
             - grafana-data:/var/lib/grafana
         restart: always
         network_mode: host
-
-volumes:
+    loki:
+        build:
+            context: loki
+        ports:
+            - "127.0.0.1:3100:3100"
+        volumes:
+            - ./loki/loki-config.yaml:/etc/loki/loki-config.yaml
+            - loki-data:/data/loki
+        restart: always
+        network_mode: host       
+    promtail:
+        build:
+            context: promtail        
+        volumes:
+            - /var/lib/docker/containers:/var/lib/docker/containers:ro
+            - ./promtail/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+        restart: always
+        network_mode: host       
+        
+volumes:    
     grafana-data:
     prometheus-data:
+    loki-data:
     targets:
